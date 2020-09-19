@@ -1,0 +1,17 @@
+services:
+    # explicit commands registration
+#    Popov\MakerGeneratorBundle\Command\:
+#        resource: '../../Command/*'
+#        tags: ['console.command']
+    Popov\MakerGeneratorBundle\Command\GenerateBundleCommand:
+        class: Popov\MakerGeneratorBundle\Command\GenerateBundleCommand
+        arguments: ['@kernel', '@filesystem', '@parameter_bag']
+        tags: ['console.command']
+
+    kernel.listener.command_dispatch:
+        class: Popov\Listener\ConsoleCommandListener
+        arguments:
+            $generator: '@maker.generator'
+        tags:
+            - { name: kernel.event_listener, event: console.command }
+

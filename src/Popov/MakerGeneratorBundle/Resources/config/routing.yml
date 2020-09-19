@@ -1,0 +1,3 @@
+popov_maker_enhancer_homepage:
+    path:     /
+    defaults: { _controller: PopovMakerEnhancerBundle:Default:index }

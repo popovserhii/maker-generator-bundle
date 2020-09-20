@@ -8,7 +8,7 @@
  * https://opensource.org/licenses/MIT
  *
  * @category Popov
- * @package Popov_<package>
+ * @package Popov_MakerGeneratorBundle
  * @author Serhii Popov <popow.serhii@gmail.com>
  * @license https://opensource.org/licenses/MIT The MIT License (MIT)
  */
@@ -31,7 +31,7 @@ abstract class GeneratorCommand extends Command
     /**
      * @var Generator
      */
-    private $generator;
+    private Generator $generator;
 
     // only useful for unit tests
     public function setGenerator(Generator $generator)
@@ -53,16 +53,13 @@ abstract class GeneratorCommand extends Command
 
     protected function getSkeletonDirs(BundleInterface $bundle = null)
     {
-        $skeletonDirs = array();
-
-        if (isset($bundle) && is_dir($dir = $bundle->getPath().'/Resources/PopovMakerGeneratorBundle/skeleton')) {
+        $skeletonDirs = [];
+        if (isset($bundle) && is_dir($dir = $bundle->getPath() . '/Resources/PopovMakerGeneratorBundle/skeleton')) {
             $skeletonDirs[] = $dir;
         }
-
         if (is_dir($dir = $this->kernel->getProjectdir() . '/resources/PopovMakerGeneratorBundle/skeleton')) {
             $skeletonDirs[] = $dir;
         }
-
         $skeletonDirs[] = __DIR__ . '/../Resources/skeleton';
         $skeletonDirs[] = __DIR__ . '/../Resources';
 
@@ -86,11 +83,10 @@ abstract class GeneratorCommand extends Command
      *
      * @return string
      */
-    protected function makePathRelative($absolutePath)
+    protected function makePathRelative(string $absolutePath)
     {
-        //$projectRootDir = dirname($this->getContainer()->getParameter('kernel.root_dir'));
         $projectRootDir = $this->params->get('kernel.project_dir');
 
-        return str_replace($projectRootDir.'/', '', realpath($absolutePath) ?: $absolutePath);
+        return str_replace($projectRootDir . '/', '', realpath($absolutePath) ?: $absolutePath);
     }
 }

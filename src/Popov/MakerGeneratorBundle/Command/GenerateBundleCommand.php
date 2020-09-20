@@ -38,10 +38,19 @@ use Popov\MakerGeneratorBundle\Model\Bundle;
  */
 class GenerateBundleCommand extends GeneratorCommand
 {
+    /**
+     * @var Filesystem
+     */
     protected $filesystem;
 
+    /**
+     * @var KernelInterface
+     */
     protected $kernel;
 
+    /**
+     * @var ParameterBagInterface
+     */
     protected $params;
 
     public function __construct(KernelInterface $kernel, Filesystem $filesystem, ParameterBagInterface $params)

@@ -8,7 +8,7 @@
  * https://opensource.org/licenses/MIT
  *
  * @category Popov
- * @package Popov_<package>
+ * @package Popov_MakerGeneratorBundle
  * @author Serhii Popov <popow.serhii@gmail.com>
  * @license https://opensource.org/licenses/MIT The MIT License (MIT)
  */
@@ -60,7 +60,6 @@ class KernelManipulator extends Manipulator
 
         // Don't add same bundle twice
         if (false !== strpos(implode('', $lines), $bundle)) {
-            //throw new \RuntimeException(sprintf('Bundle "%s" is already defined in "AppKernel::registerBundles()".', $bundle));
             throw new \RuntimeException(sprintf('Bundle "%s" is already defined in "%s".', $bundle, $configPath));
         }
 
@@ -123,7 +122,6 @@ class KernelManipulator extends Manipulator
                     array_slice($src, $this->line + 1)
                 );
 
-                //Generator::dump($this->getFilename(), implode('', $lines));
                 Generator::dump($this->kernel->getProjectDir() . $configPath, implode('', $lines));
 
                 return true;

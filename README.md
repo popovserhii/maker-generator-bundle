@@ -43,8 +43,21 @@ non-interactive mode. The interactive mode asks you some questions to configure
 the command parameters that actually generate the code.
 
 Read the following articles to learn how to use the new commands:
- - [Generating a New Bundle Skeleton](src/Popov/MakerGeneratorBundle/Resources/doc/commands/generate_bundle.md)
- - ~[Generating a New Action](#)~
+
+#### Generating a New Bundle Skeleton
+**Basic usage**
+```bash
+$ php bin/console make:bundle --namespace=App/BlogBundle
+```
+[Detailed overview](src/Popov/MakerGeneratorBundle/Resources/doc/commands/generate_bundle.md)
+
+#### Generating a New Action
+ **Basic usage**
+@todo
+ 
+ ~[Detailed overview](#)~
+
+@todo Describe basic usage all Maker command 
 
 Overriding Skeleton Templates
 -----------------------------

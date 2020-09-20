@@ -8,7 +8,7 @@
  * https://opensource.org/licenses/MIT
  *
  * @category Popov
- * @package Popov_<package>
+ * @package Popov_MakerGeneratorBundle
  * @author Serhii Popov <popow.serhii@gmail.com>
  * @license https://opensource.org/licenses/MIT The MIT License (MIT)
  */
@@ -25,11 +25,11 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 class Generator
 {
     private $skeletonDirs;
+
     private static $output;
 
     /**
      * Sets an array of directories to look for templates.
-     *
      * The directories must be sorted from the most specific to the most
      * directory.
      *
@@ -37,7 +37,7 @@ class Generator
      */
     public function setSkeletonDirs($skeletonDirs)
     {
-        $this->skeletonDirs = is_array($skeletonDirs) ? $skeletonDirs : array($skeletonDirs);
+        $this->skeletonDirs = is_array($skeletonDirs) ? $skeletonDirs : [$skeletonDirs];
     }
 
     protected function render($template, $parameters)
@@ -54,12 +54,12 @@ class Generator
      */
     protected function getTwigEnvironment()
     {
-        return new \Twig\Environment(new \Twig\Loader\FilesystemLoader($this->skeletonDirs), array(
+        return new \Twig\Environment(new \Twig\Loader\FilesystemLoader($this->skeletonDirs), [
             'debug' => true,
             'cache' => false,
             'strict_variables' => true,
             'autoescape' => false,
-        ));
+        ]);
     }
 
     protected function renderFile($template, $target, $parameters)
@@ -99,7 +99,6 @@ class Generator
         if (null === self::$output) {
             self::$output = new ConsoleOutput();
         }
-
         self::$output->writeln($message);
     }
 
@@ -107,6 +106,6 @@ class Generator
     {
         $relativePath = str_replace(getcwd(), '.', $absolutePath);
 
-        return is_dir($absolutePath) ? rtrim($relativePath, '/').'/' : $relativePath;
+        return is_dir($absolutePath) ? rtrim($relativePath, '/') . '/' : $relativePath;
     }
 }

@@ -31,7 +31,7 @@ abstract class GeneratorCommand extends Command
     /**
      * @var Generator
      */
-    private Generator $generator;
+    private $generator;
 
     // only useful for unit tests
     public function setGenerator(Generator $generator)

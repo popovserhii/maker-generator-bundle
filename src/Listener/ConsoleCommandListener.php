@@ -25,7 +25,7 @@ class ConsoleCommandListener
     /**
      * @var Generator
      */
-    protected Generator $generator;
+    protected $generator;
 
     /**
      * ConsoleCommandListener constructor.

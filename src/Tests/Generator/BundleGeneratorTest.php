@@ -148,7 +148,7 @@ class BundleGeneratorTest extends GeneratorTest
     protected function getGenerator()
     {
         $generator = new BundleGenerator($this->filesystem);
-        $generator->setSkeletonDirs(__DIR__.'/../../Resources/skeleton');
+        $generator->setSkeletonDirs(__DIR__ . '/../../Resources/skeleton');
 
         return $generator;
     }

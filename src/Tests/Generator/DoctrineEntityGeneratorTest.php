@@ -154,7 +154,7 @@ class DoctrineEntityGeneratorTest extends GeneratorTest
     protected function getGenerator()
     {
         $generator = new DoctrineEntityGenerator($this->filesystem, $this->getRegistry());
-        $generator->setSkeletonDirs(__DIR__.'/../../Resources/skeleton');
+        $generator->setSkeletonDirs(__DIR__ . '/../../Resources/skeleton');
 
         return $generator;
     }

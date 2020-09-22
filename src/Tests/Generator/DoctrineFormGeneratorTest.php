@@ -79,7 +79,7 @@ class DoctrineFormGeneratorTest extends GeneratorTest
     private function generateForm($overwrite)
     {
         $generator = new DoctrineFormGenerator($this->filesystem);
-        $generator->setSkeletonDirs(__DIR__.'/../../Resources/skeleton');
+        $generator->setSkeletonDirs(__DIR__ . '/../../Resources/skeleton');
 
         $bundle = $this->getMockBuilder('Symfony\Component\HttpKernel\Bundle\BundleInterface')->getMock();
         $bundle->expects($this->any())->method('getPath')->will($this->returnValue($this->tmpDir));
@@ -101,7 +101,7 @@ class DoctrineFormGeneratorTest extends GeneratorTest
     private function generateSubNamespacedEntityForm($overwrite)
     {
         $generator = new DoctrineFormGenerator($this->filesystem);
-        $generator->setSkeletonDirs(__DIR__.'/../../Resources/skeleton');
+        $generator->setSkeletonDirs(__DIR__ . '/../../Resources/skeleton');
 
         $bundle = $this->getMockBuilder('Symfony\Component\HttpKernel\Bundle\BundleInterface')->getMock();
         $bundle->expects($this->any())->method('getPath')->will($this->returnValue($this->tmpDir));

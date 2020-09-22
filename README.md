@@ -45,19 +45,111 @@ the command parameters that actually generate the code.
 Read the following articles to learn how to use the new commands:
 
 #### Generating a New Bundle Skeleton
-**Basic usage**
+_Basic usage_
 ```bash
 $ php bin/console make:bundle --namespace=App/BlogBundle
 ```
-[Detailed overview](src/Popov/MakerGeneratorBundle/Resources/doc/commands/generate_bundle.md)
+[Detailed overview](MakerGeneratorBundle/Resources/doc/commands/generate_bundle.md)
 
 #### Generating a New Action
- **Basic usage**
+_Basic usage_
 @todo
  
- ~[Detailed overview](#)~
+~[Detailed overview](#)~
 
-@todo Describe basic usage all Maker command 
+#### Other Embedded Commands
+[From official docs](https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html#usage): 
+This bundle provides several commands under the make: namespace. List them all executing this command:
+```bash
+$ php bin/console list make
+
+
+ make:command            Creates a new console command class
+ make:controller         Creates a new controller class
+ make:entity             Creates a new Doctrine entity class
+
+ [...]
+
+ make:validator          Creates a new validator and constraint class
+ make:voter              Creates a new security voter class
+```
+
+The names of the commands are self-explanatory, but some of them include optional arguments and options. 
+Check them out with the `--help` option:
+```bash
+ php bin/console make:controller --help
+```
+
+Usage Strategies
+----------------
+
+#### Default strategy
+By default, Symfony 4 and newer provide bundle-less structure under `App` namespace.
+So all your code will have only `App` namespace. If you want to change the namespace, read the next chapter.
+
+With minimum efforts, in standard Symfony configuration, you can just add `--namespace` option to a command
+and get well-formatted code.
+
+Take a note, this approach won't create the real bundle for you, but just create bundle like directory structure.
+It has some benefits, because there is no need create additional bundle configuration files, 
+until you want to publish it on Packages, etc. 
+
+Anyway, in any moment you can add required configuration files and get the real bundle without copy-pasting and 
+rebuilding files from standard Symfony approach.    
+
+After you run the next command, the new Entity will be generated in `src/` directory 
+with namespace `App\BlogBundle\Entity\Post`
+
+```bash
+$ php bin/console make:entity Post --namespace=App/BlogBundle
+```
+
+##### DI configuration
+Add the next configuration to `config/services.yaml`.
+This tells Symfony to make classes in `src/App/BlogBundle` available to be used as services. 
+This creates a service per class whose id is the fully-qualified class name.
+
+> NOTE: You have to add this configuration for each new namespace. 
+> If you use bundle-based structure, then add this to bundle configuration.
+
+```yaml
+# config/services.yaml
+services:
+    # ...
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\BlogBundle\:
+        resource: '../src/App/BlogBundle/*'
+        exclude: '../src/App/BlogBundle/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\BlogBundle\Controller\:
+        resource: '../src/App/BlogBundle/Controller'
+        tags: ['controller.service_arguments']
+```
+
+#### Bundle strategy
+Bundle structure allows grouping related code under certain directory.
+There is no need scroll through dozens or even thousands of files to find what you need.
+This approach makes code more readable and understandable. 
+
+This approach works as previous one, but before create any class with `make:*` command 
+you must generate bundle structure:
+
+```bash
+$ php bin/console make:bundle --namespace=App/BlogBundle
+```
+
+Changing Default Namespace
+----------------------------
+In some cases you might not to use default `App` namespace, and instead of you want to use your personal namespace
+or your company namespace, then you have to change `App\Kernel` namespace to something else in the following files:
+
+- `src/Kernel.php`
+- `public/index.php`
+- `bin/console`
 
 Overriding Skeleton Templates
 -----------------------------
@@ -70,8 +162,8 @@ You can define custom skeleton templates by creating the same directory and
 file structure in the following locations (displayed from highest to lowest
 priority):
 
-* ``<BUNDLE_PATH>/Resources/SensioGeneratorBundle/skeleton/``
-* ``resources/SensioGeneratorBundle/skeleton/``
+* ``<BUNDLE_PATH>/Resources/MakerGeneratorBundle/skeleton/``
+* ``resources/MakerGeneratorBundle/skeleton/``
 
 The ``<BUNDLE_PATH>`` value refers to the base path of the bundle where you are
 scaffolding an action or a CRUD backend.

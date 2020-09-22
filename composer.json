@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-          "Popov\\MakerGeneratorBundle\\": "src/Popov/MakerGeneratorBundle"
+          "Popov\\MakerGeneratorBundle\\": "src/"
         },
         "exclude-from-classmap": [
             "/Tests/"
